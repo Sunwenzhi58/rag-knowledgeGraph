@@ -1,5 +1,6 @@
 package com.sandwich.ragkg.dao.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -37,10 +38,21 @@ public class UserDO {
     @TableField("primary_org")
     private String primaryOrg; // 用户主组织标签
 
-    @TableField("create_at")
+    @TableField(value = "created_at", fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 
-    @TableField("updated_at")
+    @TableField(value = "updated_at", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
 
+    @TableField("name")
+    private String name;
+
+    @TableField("phone")
+    private String phone;
+
+    @TableField("email")
+    private String email;
+
+    @TableField("avatar")
+    private String avatar;
 }

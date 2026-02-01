@@ -18,7 +18,7 @@
         <el-dropdown placement="bottom">
           <div class="avatar">
             <img :src="user.avatar || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'" />
-            <div>{{ user.name ||  '管理员' }}</div>
+            <div>{{ user.username ||  '管理员' }}</div>
           </div>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="goToPerson">个人信息</el-dropdown-item>
@@ -72,8 +72,8 @@ export default {
     }
   },
   created() {
-    if (!this.user.id) {
-      this.$router.push('/login')
+    if (!this.user.token) {
+      this.$router.push('/user/login')
     }
   },
   methods: {
@@ -81,9 +81,7 @@ export default {
       this.user = JSON.parse(localStorage.getItem('xm-user') || '{}')   // 重新获取下用户的最新信息
     },
     goToPerson() {
-      if (this.user.role === 'ADMIN') {
-        this.$router.push('/adminPerson')
-      }
+      this.$router.push('/person')
     },
     logout() {
       localStorage.removeItem('xm-user')

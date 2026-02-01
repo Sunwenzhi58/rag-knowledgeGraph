@@ -3,6 +3,8 @@ package com.sandwich.ragkg.common.exception;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.sandwich.ragkg.common.Result;
+import com.sandwich.ragkg.common.enums.ResultCodeEnum;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

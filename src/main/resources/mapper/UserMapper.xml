@@ -18,6 +18,24 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sandwich.ragkg.dao.mapper.UserMapper">
+    <update id="update" parameterType="com.sandwich.ragkg.dto.req.UserUpdateReqDTO">
+        update users
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar},
+            </if>
+        </set>
+        where username = #{username}
+    </update>
 
     <select id="findByUserName" parameterType="string" resultType="com.sandwich.ragkg.dao.entity.UserDO">
         SELECT * FROM users

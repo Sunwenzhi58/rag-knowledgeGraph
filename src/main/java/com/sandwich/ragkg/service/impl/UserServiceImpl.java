@@ -11,6 +11,7 @@ import com.sandwich.ragkg.dao.mapper.UserMapper;
 import com.sandwich.ragkg.dto.req.UserLoginRequestDTO;
 import com.sandwich.ragkg.dto.req.UserRegisterReqDTO;
 import com.sandwich.ragkg.common.exception.CustomException;
+import com.sandwich.ragkg.dto.req.UserUpdateReqDTO;
 import com.sandwich.ragkg.dto.resp.UserLoginRespDTO;
 import com.sandwich.ragkg.service.UserService;
 import com.sandwich.ragkg.utils.JwtUtils;
@@ -78,7 +79,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
         }
         String username = authenticateUser(requestParam.getUsername(), requestParam.getPassword());
         String token = jwtUtils.generateToken(username);
-        return new UserLoginRespDTO(userDO.getUsername(), userDO.getRole(), userDO.getOrgTags(), userDO.getPrimaryOrg(), token);
+        return UserLoginRespDTO.builder()
+                .username(userDO.getUsername())
+                .name(userDO.getName())
+                .role(userDO.getRole())
+                .phone(userDO.getPhone())
+                .email(userDO.getEmail())
+                .orgTags(userDO.getOrgTags())
+                .primaryOrg(userDO.getPrimaryOrg())
+                .token(token)
+                .build();
+    }
+
+    @Override
+    public void update(UserUpdateReqDTO requestParam) {
+        userMapper.update(requestParam);
     }
 
 }

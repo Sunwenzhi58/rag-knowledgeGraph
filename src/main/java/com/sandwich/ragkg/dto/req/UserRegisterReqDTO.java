@@ -20,4 +20,10 @@ public class UserRegisterReqDTO {
     private String orgTags;
 
     private String primaryOrg;
+
+    private String name;
+
+    private String phone;
+
+    private String email;
 }

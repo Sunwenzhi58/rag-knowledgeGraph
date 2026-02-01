@@ -3,6 +3,7 @@ package com.sandwich.ragkg.controller;
 import com.sandwich.ragkg.common.Result;
 import com.sandwich.ragkg.dto.req.UserLoginRequestDTO;
 import com.sandwich.ragkg.dto.req.UserRegisterReqDTO;
+import com.sandwich.ragkg.dto.req.UserUpdateReqDTO;
 import com.sandwich.ragkg.service.UserService;
 import com.sandwich.ragkg.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,10 @@ import java.util.Map;
  * @date 2026/1/24
  */
 @RestController
-@RequestMapping("/api/rag-kg/user")
+@RequestMapping("user")
 public class UserController {
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private JwtUtils jwtUtils;
 
     @PostMapping("/register")
     public Result register(@RequestBody UserRegisterReqDTO requestParam){
@@ -31,9 +29,14 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Result login(UserLoginRequestDTO requestParam) {
+    public Result login(@RequestBody UserLoginRequestDTO requestParam) {
         return Result.success(userService.login(requestParam));
+    }
 
+    @PutMapping("/update")
+    public Result update(@RequestBody UserUpdateReqDTO requestParam) {
+        userService.update(requestParam);
+        return Result.success();
     }
     @GetMapping("/test1")
     public Result test(){

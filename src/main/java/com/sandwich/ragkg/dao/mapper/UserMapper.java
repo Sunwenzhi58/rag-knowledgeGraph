@@ -2,6 +2,7 @@ package com.sandwich.ragkg.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sandwich.ragkg.dao.entity.UserDO;
+import com.sandwich.ragkg.dto.req.UserUpdateReqDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -12,4 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper extends BaseMapper<UserDO> {
     UserDO findByUserName(String username);
+
+    void update(UserUpdateReqDTO requestParam);
 }

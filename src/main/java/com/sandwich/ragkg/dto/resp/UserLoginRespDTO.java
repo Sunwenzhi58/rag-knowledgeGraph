@@ -2,6 +2,7 @@ package com.sandwich.ragkg.dto.resp;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,9 +12,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserLoginRespDTO {
     private String username;
     private String role;
+    private String name;
+    private String phone;
+    private String email;
+    private String avatar;
     private String orgTags;
     private String primaryOrg;
     /**

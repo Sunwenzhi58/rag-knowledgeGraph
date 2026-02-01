@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.sandwich.ragkg.dao.entity.UserDO;
 import com.sandwich.ragkg.dto.req.UserLoginRequestDTO;
 import com.sandwich.ragkg.dto.req.UserRegisterReqDTO;
+import com.sandwich.ragkg.dto.req.UserUpdateReqDTO;
 import com.sandwich.ragkg.dto.resp.UserLoginRespDTO;
 
 /**
@@ -17,4 +18,6 @@ public interface UserService extends IService<UserDO> {
     String authenticateUser(String username, String password);
 
     UserLoginRespDTO login(UserLoginRequestDTO requestParam);
+
+    void update(UserUpdateReqDTO requestParam);
 }

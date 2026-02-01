@@ -12,12 +12,12 @@
         <el-form-item>
           <el-button style="width: 100%; background-color: #333; border-color: #333; color: white" @click="login">登 录</el-button>
         </el-form-item>
-<!--        <div style="display: flex; align-items: center">-->
-<!--          <div style="flex: 1"></div>-->
-<!--          <div style="flex: 1; text-align: right">-->
-<!--            还没有账号？请 <a href="/register">注册</a>-->
-<!--          </div>-->
-<!--        </div>-->
+        <div style="display: flex; align-items: center">
+          <div style="flex: 1"></div>
+          <div style="flex: 1; text-align: right">
+            还没有账号？请 <a href="/register">注册</a>
+          </div>
+        </div>
       </el-form>
     </div>
   </div>
@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       dialogVisible: true,
-      form: { role: 'ADMIN' },
+      form: { role: 'USER' },
       rules: {
         username: [
           { required: true, message: '请输入账号', trigger: 'blur' },
@@ -48,7 +48,7 @@ export default {
       this.$refs['formRef'].validate((valid) => {
         if (valid) {
           // 验证通过
-          this.$request.post('/login', this.form).then(res => {
+          this.$request.post('/user/login', this.form).then(res => {
             if (res.code === '200') {
               localStorage.setItem("xm-user", JSON.stringify(res.data))  // 存储用户数据
               this.$router.push('/')  // 跳转主页
