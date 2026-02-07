@@ -55,12 +55,12 @@ export default {
     update() {
       this.$refs.formRef.validate((valid) => {
         if (valid) {
-          this.$request.put('/updatePassword', this.user).then(res => {
+          this.$request.put('/user/updatePassword', this.user).then(res => {
             if (res.code === '200') {
               // 成功更新
               localStorage.removeItem('xm-user')   // 清除缓存的用户信息
               this.$message.success('修改密码成功')
-              this.$router.push('/login')
+              this.$router.push('/user/login')
             } else {
               this.$message.error(res.msg)
             }

@@ -151,6 +151,19 @@ public class JwtUtils {
     }
 
     /**
+     * 从 Token 中提取用户名
+     */
+    public String extractUsername(String token) {
+        try {
+            Claims claims = extractClaimsIgnoreExpiration(token);
+            return claims != null ? claims.getSubject() : null;
+        } catch (Exception e) {
+            logger.debug("Error extracting username from token", e);
+            return null;
+        }
+    }
+
+    /**
      * 生成 Refresh Token（长期有效的刷新令牌，集成Redis缓存）
      */
     public String generateRefreshToken(String username) {

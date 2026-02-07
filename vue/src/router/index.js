@@ -20,7 +20,7 @@ const routes = [
       { path: 'home', name: 'Home', meta: { name: '系统首页' }, component: () => import('../views/manager/Home') },
       { path: 'admin', name: 'Admin', meta: { name: '管理员信息' }, component: () => import('../views/manager/Admin') },
       // { path: 'adminPerson', name: 'AdminPerson', meta: { name: '个人信息' }, component: () => import('../views/manager/AdminPerson') },
-      { path: 'person', name: 'person', meta: { name: '个人信息' }, component: () => import('../views/manager/person') },
+      { path: 'person', name: 'person', meta: { name: '个人信息' }, component: () => import('../views/manager/Person') },
       { path: 'password', name: 'Password', meta: { name: '修改密码' }, component: () => import('../views/manager/Password') },
       { path: 'notice', name: 'Notice', meta: { name: '公告信息' }, component: () => import('../views/manager/Notice') },
     ]
@@ -31,11 +31,10 @@ const routes = [
     component: () => import('../views/Front.vue'),
     children: [
       { path: 'home', name: 'Home', meta: { name: '系统首页' }, component: () => import('../views/front/Home') },
-      { path: 'person', name: 'Person', meta: { name: '个人信息' }, component: () => import('../views/front/Person') },
     ]
   },
-  { path: '/login', name: 'Login', meta: { name: '登录' }, component: () => import('../views/Login.vue') },
-  { path: '/register', name: 'Register', meta: { name: '注册' }, component: () => import('../views/Register.vue') },
+  { path: '/user/login', name: 'Login', meta: { name: '登录' }, component: () => import('../views/Login.vue') },
+  { path: '/user/register', name: 'Register', meta: { name: '注册' }, component: () => import('../views/Register.vue') },
   { path: '*', name: 'NotFound', meta: { name: '无法访问' }, component: () => import('../views/404.vue') },
 ]
 

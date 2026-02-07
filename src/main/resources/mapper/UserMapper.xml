@@ -41,4 +41,10 @@
         SELECT * FROM users
         WHERE username = #{username}
     </select>
+
+    <update id="updatePassword">
+        UPDATE users
+        SET password = #{encodedPassword}
+        WHERE username = #{username}
+    </update>
 </mapper>

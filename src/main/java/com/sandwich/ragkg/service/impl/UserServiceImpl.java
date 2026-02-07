@@ -8,14 +8,17 @@ import com.sandwich.ragkg.common.enums.ResultCodeEnum;
 import com.sandwich.ragkg.common.enums.RoleEnum;
 import com.sandwich.ragkg.dao.entity.UserDO;
 import com.sandwich.ragkg.dao.mapper.UserMapper;
-import com.sandwich.ragkg.dto.req.UserLoginRequestDTO;
+import com.sandwich.ragkg.dto.req.UserLoginReqDTO;
 import com.sandwich.ragkg.dto.req.UserRegisterReqDTO;
 import com.sandwich.ragkg.common.exception.CustomException;
+import com.sandwich.ragkg.dto.req.UserUpdatePasswordReqDTO;
 import com.sandwich.ragkg.dto.req.UserUpdateReqDTO;
 import com.sandwich.ragkg.dto.resp.UserLoginRespDTO;
 import com.sandwich.ragkg.service.UserService;
 import com.sandwich.ragkg.utils.JwtUtils;
 import com.sandwich.ragkg.utils.PasswordUtil;
+import com.sandwich.ragkg.utils.UserContextUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +33,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     UserMapper userMapper;
     @Autowired
     JwtUtils jwtUtils;
+    @Autowired
+    HttpServletRequest request;
     private static final String PRIVATE_TAG_PREFIX = "PRIVATE_";
     @Override
     public void register(UserRegisterReqDTO requestParam) {
@@ -67,7 +72,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     }
 
     @Override
-    public UserLoginRespDTO login(UserLoginRequestDTO requestParam) {
+    public UserLoginRespDTO login(UserLoginReqDTO requestParam) {
         if (requestParam.getUsername() == null || requestParam.getUsername().isEmpty()
                 || requestParam.getPassword() == null || requestParam.getPassword().isEmpty()) {
             throw new CustomException(ResultCodeEnum.PARAM_IS_NULL);
@@ -85,6 +90,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
                 .role(userDO.getRole())
                 .phone(userDO.getPhone())
                 .email(userDO.getEmail())
+                .avatar(userDO.getAvatar())
                 .orgTags(userDO.getOrgTags())
                 .primaryOrg(userDO.getPrimaryOrg())
                 .token(token)
@@ -94,6 +100,43 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     @Override
     public void update(UserUpdateReqDTO requestParam) {
         userMapper.update(requestParam);
+    }
+
+    @Override
+    public void updatePassword(UserUpdatePasswordReqDTO requestParam) {
+        if (requestParam.getPassword() == null || requestParam.getPassword().isEmpty()
+                || requestParam.getNewPassword() == null || requestParam.getNewPassword().isEmpty()) {
+            throw new CustomException(ResultCodeEnum.PARAM_IS_NULL);
+        }
+
+        // 原密码和新密码不能相同
+        if (requestParam.getPassword().equals(requestParam.getNewPassword())) {
+            throw new CustomException(ResultCodeEnum.PARAM_ERROR, "新密码不能与原密码相同");
+        }
+
+        // 从请求中获取当前登录用户的用户名
+        String username = UserContextUtil.getUsername(request, jwtUtils);
+        if (username == null || username.isEmpty()) {
+            throw new CustomException(ResultCodeEnum.USER_NOT_LOGIN);
+        }
+
+        // 查询用户信息
+        UserDO user = userMapper.findByUserName(username);
+        if (user == null) {
+            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
+        }
+
+        // 验证原密码是否正确
+        if (!PasswordUtil.matches(requestParam.getPassword(), user.getPassword())) {
+            throw new CustomException(ResultCodeEnum.PARAM_PASSWORD_ERROR);
+        }
+
+        // 更新密码
+        String encodedNewPassword = PasswordUtil.encode(requestParam.getNewPassword());
+        int updated = userMapper.updatePassword(username, encodedNewPassword);
+        if (updated < 1) {
+            throw new CustomException(ResultCodeEnum.SYSTEM_ERROR, "更新密码失败");
+        }
     }
 
 }

@@ -15,4 +15,13 @@ public interface UserMapper extends BaseMapper<UserDO> {
     UserDO findByUserName(String username);
 
     void update(UserUpdateReqDTO requestParam);
+
+    /**
+     * 更新用户密码
+     *
+     * @param username 用户名
+     * @param encodedPassword 加密后的新密码
+     * @return 影响行数
+     */
+    int updatePassword(String username, String encodedPassword);
 }

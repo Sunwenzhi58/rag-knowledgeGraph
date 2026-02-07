@@ -94,9 +94,10 @@ export default {
           this.$message.success('保存成功')
           // 更新浏览器缓存里的用户信息
           localStorage.setItem('xm-user', JSON.stringify(this.user))
-
           // 触发父级的数据更新
           this.$emit('update:user')
+          // 返回首页
+          this.$router.push('/')
         } else {
           this.$message.error(res.msg)
         }

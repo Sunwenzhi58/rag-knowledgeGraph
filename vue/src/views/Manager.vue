@@ -85,7 +85,7 @@ export default {
     },
     logout() {
       localStorage.removeItem('xm-user')
-      this.$router.push('/login')
+      this.$router.push('/user/login')
     }
   }
 }

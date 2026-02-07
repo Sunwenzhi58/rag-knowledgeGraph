@@ -44,8 +44,9 @@ public class SecurityConfig {
             // 配置请求授权
             .authorizeHttpRequests(auth -> auth
                 // 允许匿名访问的端点（与 UserController 实际路径一致）
-                .requestMatchers("/register").permitAll()
-                .requestMatchers("/login").permitAll()
+                .requestMatchers("/user/register").permitAll()
+                .requestMatchers("/user/login").permitAll()
+                .requestMatchers("/user/updatePassword").permitAll()
                 .requestMatchers("/test1").permitAll()
                 // 开发阶段暂放行所有请求；上线前需添加 JWT 过滤器并改回 authenticated()
                 .anyRequest().permitAll()
