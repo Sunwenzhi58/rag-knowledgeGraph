@@ -15,7 +15,7 @@
         <div style="display: flex; align-items: center">
           <div style="flex: 1"></div>
           <div style="flex: 1; text-align: right">
-            还没有账号？请 <a href="/register">注册</a>
+            还没有账号？请 <a href="/user/register">注册</a>
           </div>
         </div>
       </el-form>

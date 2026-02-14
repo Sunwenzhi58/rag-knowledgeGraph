@@ -8,7 +8,7 @@
         <div style="margin: 15px; text-align: center">
           <el-upload
               class="avatar-uploader"
-              :action="$baseUrl + '/files/upload'"
+              :action="$baseUrl + '/files/avatar/upload'"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
           >
